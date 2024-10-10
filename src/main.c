@@ -3,11 +3,6 @@
 #include <string.h>
 
 int main(int argc, char *argv[]) {
-    
-    // char* str = "-20";
-
-    // printf("%d\n", is_valid_number(str, -99, 99));
-    // return 0;
     const char *file_path = NULL;
     int month = 0;
 
