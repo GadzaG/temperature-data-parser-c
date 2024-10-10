@@ -79,7 +79,6 @@ void read_csv_to_list(const char *file_path, TemperatureData **data_list, int *d
         line_number++;
         TemperatureData data;
         line[strcspn(line, "\n")] = '\0';
-        //printf("readed : %s\0", line);
         if (parse_line(line, &data)) {
             (*data_list)[*data_count] = data;
             (*data_count)++;
@@ -121,7 +120,7 @@ void calculate_temperature_stats(TemperatureData* data_list, int data_count) {
                 if (monthly_temps[month][i] < min_temp) min_temp = monthly_temps[month][i];
                 if (monthly_temps[month][i] > max_temp) max_temp = monthly_temps[month][i];
             }
-            printf("%s[%d]:\n\tavg = %.2f\n\tmin = %.2f\n\tmax = %.2f\n", monthNames[month], month, avg_temp, min_temp, max_temp);
+            printf("\"%s\" : {\n\t\"avg\": %.2f,\n\t\"min\": %.2f,\n\t\"max\": %.2f\n},\n", monthNames[month], avg_temp, min_temp, max_temp);
         }
     }
 
@@ -137,13 +136,13 @@ void calculate_temperature_stats(TemperatureData* data_list, int data_count) {
             if (all_temps[i] < min_temp_year) min_temp_year = all_temps[i];
             if (all_temps[i] > max_temp_year) max_temp_year = all_temps[i];
         }
-        printf("Year:\n\tavg = %.2f\n\tmin = %.2f\n\tmax = %.2f\n", avg_temp_year, min_temp_year, max_temp_year);
+        printf("\"%d\" : {\n\t\"avg\": %.2f,\n\t\"min\": %.2f,\n\t\"max\": %.2f\n},\n", data_list[0].year, avg_temp_year, min_temp_year, max_temp_year);
+        //printf("Year:\n\tavg = %.2f\n\tmin = %.2f\n\tmax = %.2f\n", avg_temp_year, min_temp_year, max_temp_year);
     }
 }
 
 void calculate_temperature_stats_for_month(TemperatureData* data_list, int data_count, int month) {
     float* monthly_temps = (float*)malloc(sizeof(float) * data_count);
-    //float monthly_temps[MAX_DATA_LENGTH];
     int monthly_count = 0;
 
     for (int i = 0; i < data_count; i++) {
@@ -165,7 +164,7 @@ void calculate_temperature_stats_for_month(TemperatureData* data_list, int data_
             if (monthly_temps[i] < min_temp) min_temp = monthly_temps[i];
             if (monthly_temps[i] > max_temp) max_temp = monthly_temps[i];
         }
-        printf("Month [%d]:\n\tavg = %.2f\n\tmin = %.2f\n\tmax = %.2f\n", month, avg_temp, min_temp, max_temp);
+        printf("\"%s\" : {\n\t\"avg\": %.2f,\n\t\"min\": %.2f,\n\t\"max\": %.2f\n},\n", monthNames[month], avg_temp, min_temp, max_temp);
     } else {
         printf("No data for month: %d\n", month);
     }

@@ -22,6 +22,10 @@ int main(int argc, char *argv[]) {
         } else if (strcmp(argv[i], "-m") == 0 || strcmp(argv[i], "--month") == 0) {
             if (i + 1 < argc) {
                 month = atoi(argv[++i]);
+                if ((month < 1) || (month > 12)) {
+                    fprintf(stderr, "Error: wrong month number [1 : 12]\n");
+                    return 1;
+                }
             } else {
                 fprintf(stderr, "Error: expected month number -m or --month\n");
                 return 1;

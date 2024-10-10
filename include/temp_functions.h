@@ -14,7 +14,7 @@ typedef struct {
     float temp;
 } TemperatureData;
 
-#define MAX_LINE_LENGHT 32 //20
+#define MAX_LINE_LENGHT 32
 
 void read_csv_to_list(const char *file_path, TemperatureData** data_list, int *data_count);
 
