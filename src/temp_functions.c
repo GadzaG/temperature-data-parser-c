@@ -79,6 +79,7 @@ void read_csv_to_list(const char *file_path, TemperatureData **data_list, int *d
         line_number++;
         TemperatureData data;
         line[strcspn(line, "\n")] = '\0';
+        //printf("readed : %s\0", line);
         if (parse_line(line, &data)) {
             (*data_list)[*data_count] = data;
             (*data_count)++;
@@ -86,72 +87,8 @@ void read_csv_to_list(const char *file_path, TemperatureData **data_list, int *d
             fprintf(stderr, "Error on line %d: %s\n", line_number, line);
         }
     }
-
     fclose(file);
 }
-
-// void read_csv_to_list(const char *file_path, TemperatureData **data_list, int *data_count) {
-//     FILE *file = fopen(file_path, "r");
-//     if (file == NULL) {
-//         fprintf(stderr, "File open error: %s\n", file_path);
-//         return;
-//     }
-
-//     int line_count = 0;
-//     char line[MAX_LINE_LENGTH];
-//     while (fgets(line, sizeof(line), file)) {
-//         line_count++;
-//     }
-//     rewind(file);
-
-//     *data_list = (TemperatureData *)malloc(sizeof(TemperatureData) * line_count);
-//     if (*data_list == NULL) {
-//         fprintf(stderr, "Memory allocation error\n");
-//         fclose(file);
-//         return;
-//     }
-
-//     int line_number = 0;
-//     *data_count = 0;
-
-//     while (fgets(line, sizeof(line), file)) {
-//         line_number++;
-//         char *token;
-//         char *rest = line;
-//         int field_count = 0;
-//         TemperatureData data;
-
-//         while ((token = strtok_r(rest, ";", &rest)) != NULL) {
-//             field_count++;
-//             switch (field_count) {
-//                 case 1: data.year = atoi(token); break;
-//                 case 2: data.month = atoi(token); break;
-//                 case 3: data.day = atoi(token); break;
-//                 case 4: data.hour = atoi(token); break;
-//                 case 5: data.minute = atoi(token); break;
-//                 case 6: data.temp = atof(token); break;
-//                 default: break;
-//             }
-//         }
-
-//         if (field_count != 6) {
-//             fprintf(stderr, "Error on line %d: Wrong arguments count: %s", line_number, line);
-//             continue;
-//         }
-
-//         if (data.month < 1 || data.month > 12 || data.day < 1 || data.day > 31 ||
-//             data.hour < 0 || data.hour > 23 || data.minute < 0 || data.minute > 59 ||
-//             data.temp < -99 || data.temp > 99) {
-//             fprintf(stderr, "Error on line %d: Wrong data: %s", line_number, line);
-//             continue;
-//         }
-
-//         (*data_list)[*data_count] = data;
-//         (*data_count)++;
-//     }
-
-//     fclose(file);
-// }
 
 void calculate_temperature_stats(TemperatureData* data_list, int data_count) {
     float **monthly_temps = (float **)malloc(sizeof(float *) * 13);
@@ -184,7 +121,7 @@ void calculate_temperature_stats(TemperatureData* data_list, int data_count) {
                 if (monthly_temps[month][i] < min_temp) min_temp = monthly_temps[month][i];
                 if (monthly_temps[month][i] > max_temp) max_temp = monthly_temps[month][i];
             }
-            printf("Month [%d]:\n\tavg = %.2f\n\tmin = %.2f\n\tmax = %.2f\n", month, avg_temp, min_temp, max_temp);
+            printf("%s[%d]:\n\tavg = %.2f\n\tmin = %.2f\n\tmax = %.2f\n", monthNames[month], month, avg_temp, min_temp, max_temp);
         }
     }
 

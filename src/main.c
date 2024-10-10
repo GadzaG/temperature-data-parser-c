@@ -4,6 +4,10 @@
 
 int main(int argc, char *argv[]) {
     
+    // char* str = "-20";
+
+    // printf("%d\n", is_valid_number(str, -99, 99));
+    // return 0;
     const char *file_path = NULL;
     int month = 0;
 
@@ -44,7 +48,7 @@ int main(int argc, char *argv[]) {
 
     read_csv_to_list(file_path, &data_list, &data_count);
 
-    print_data_list(data_list, data_count);
+    //print_data_list(data_list, data_count);
 
     if (month > 0 && month <= 12) {
         calculate_temperature_stats_for_month(data_list, data_count, month);
