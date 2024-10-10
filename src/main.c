@@ -39,11 +39,10 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    //переделать под динамический массив
-    TemperatureData data_list[MAX_DATA_LENGTH];
+    TemperatureData* data_list = NULL;
     int data_count = 0;
 
-    read_csv_to_list(file_path, data_list, &data_count);
+    read_csv_to_list(file_path, &data_list, &data_count);
 
     print_data_list(data_list, data_count);
 
@@ -52,6 +51,8 @@ int main(int argc, char *argv[]) {
     } else {
         calculate_temperature_stats(data_list, data_count);
     }
+
+    free(data_list);
 
     return 0;
 }

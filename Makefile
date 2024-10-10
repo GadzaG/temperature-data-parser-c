@@ -14,6 +14,7 @@ all: $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CC) $(OBJS) -o $(TARGET)
+	rm -f $(OBJS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
